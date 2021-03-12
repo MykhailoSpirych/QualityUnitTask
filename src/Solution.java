@@ -46,6 +46,17 @@ public class Solution {
                     Date dateFrom = format.parse(parametrs[4]);
                     lineD.setDateFrom(dateFrom);
                 }
+                queryLines.add(lineD);
+            }
+            else if(line.startsWith("C")){
+                TimeLine lineC = new TimeLine();
+                String[] cParams = line.trim().split(" ");
+                lineC.setServiceId(Double.parseDouble(cParams[1]));
+                lineC.setQuestionId(Double.parseDouble(cParams[2]));
+                lineC.setResponseType(cParams[3]);
+                Date date = format.parse(cParams[4]);
+                lineC.setDate(date);
+                lineC.setWaitingTime(Integer.parseInt(cParams[5]));
             }
 
         }
