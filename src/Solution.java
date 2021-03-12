@@ -46,9 +46,9 @@ public class Solution {
                 lineD.setResponseType(parametrs[3]);
                 if (parametrs[4].contains("-")) {
                     String[] dates = parametrs[4].split("-");
-                    Date dateFrom = format.parse(dates[1]);
+                    Date dateFrom = format.parse(dates[0]);
                     lineD.setDateFrom(dateFrom);
-                    Date dateTo = format.parse(dates[2]);
+                    Date dateTo = format.parse(dates[1]);
                     lineD.setDateTo(dateTo);
                 } else if (!parametrs[4].contains("-")) {
                     Date dateFrom = format.parse(parametrs[4]);
@@ -60,7 +60,8 @@ public class Solution {
                 TimeLine lineC = new TimeLine();
                 String[] cParams = line.trim().split(" ");
                 lineC.setServiceId(Double.parseDouble(cParams[1]));
-                lineC.setQuestionId(Double.parseDouble(cParams[2]));
+                String[] question = cParams[2].split("\\.");
+                lineC.setQuestionId(Double.parseDouble(question[0]));
                 lineC.setResponseType(cParams[3]);
                 Date date = format.parse(cParams[4]);
                 lineC.setDate(date);
