@@ -33,7 +33,15 @@ public class Solution {
             if (line.startsWith("D")) {
                 QueryLine lineD = new QueryLine();
                 String[] parametrs = line.trim().split(" ");
+                if(parametrs[1].equals("*")){
+                    lineD.setServiceId(0.0);
+                }
+                else
                 lineD.setServiceId(Double.parseDouble(parametrs[1]));
+                if(parametrs[2].equals("*")){
+                    lineD.setQuestionId(0.0);
+                }
+                else
                 lineD.setQuestionId(Double.parseDouble(parametrs[2]));
                 lineD.setResponseType(parametrs[3]);
                 if (parametrs[4].contains("-")) {
@@ -57,6 +65,7 @@ public class Solution {
                 Date date = format.parse(cParams[4]);
                 lineC.setDate(date);
                 lineC.setWaitingTime(Integer.parseInt(cParams[5]));
+                timeLines.add(lineC);
             }
 
         }
