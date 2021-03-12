@@ -70,5 +70,6 @@ public class Solution {
             }
 
         }
+        System.out.println(timeLines.get(0).toString());
     }
 }
