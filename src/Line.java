@@ -1,7 +1,7 @@
 public class Line {
 private double questionId;
 private double serviceId;
-private char responseType;
+private String responseType;
 
     public double getQuestionId() {
         return questionId;
@@ -19,11 +19,11 @@ private char responseType;
         this.serviceId = serviceId;
     }
 
-    public char getResponseType() {
+    public String getResponseType() {
         return responseType;
     }
 
-    public void setResponseType(char responseType) {
+    public void setResponseType(String responseType) {
         this.responseType = responseType;
     }
 }
