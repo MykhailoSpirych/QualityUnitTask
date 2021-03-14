@@ -1,5 +1,7 @@
 # QulityUnitTask
 
+# This solution is for console input.
+
 The Problem
 Webhosting company provides customer support via email. They record reply waiting time,
 type of question, category, and service. To improve customer satisfaction, they need an
