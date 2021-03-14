@@ -4,12 +4,14 @@ import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 public class Solution {
     private static int count;
     private static String[] lines;
+
 
     public static void main(String[] args) throws IOException, ParseException {
         SimpleDateFormat format = new SimpleDateFormat();
@@ -32,6 +34,7 @@ public class Solution {
         for (String line : lines) {
             if (line.startsWith("D")) {
                 QueryLine lineD = new QueryLine();
+                lineD.setLineNum(Arrays.asList(lines).indexOf(line));
                 String[] parametrs = line.trim().split(" ");
                 if(parametrs[1].equals("*")){
                     lineD.setServiceId(0.0);
@@ -54,10 +57,13 @@ public class Solution {
                     Date dateFrom = format.parse(parametrs[4]);
                     lineD.setDateFrom(dateFrom);
                 }
+
                 queryLines.add(lineD);
+
             }
             else if(line.startsWith("C")){
                 TimeLine lineC = new TimeLine();
+                lineC.setLineNum(Arrays.asList(lines).indexOf(line));
                 String[] cParams = line.trim().split(" ");
                 lineC.setServiceId(Double.parseDouble(cParams[1]));
                 String[] question = cParams[2].split("\\.");
@@ -67,9 +73,11 @@ public class Solution {
                 lineC.setDate(date);
                 lineC.setWaitingTime(Integer.parseInt(cParams[5]));
                 timeLines.add(lineC);
+
             }
 
         }
-        System.out.println(timeLines.get(0).toString());
+        System.out.println(timeLines.size());
+        System.out.println(queryLines.size());
     }
 }
