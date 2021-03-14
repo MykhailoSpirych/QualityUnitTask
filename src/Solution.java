@@ -2,10 +2,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 public class Solution {
@@ -14,8 +12,7 @@ public class Solution {
 
 
     public static void main(String[] args) throws IOException{
-       /* SimpleDateFormat format = new SimpleDateFormat();
-        format.applyPattern("dd.MM.yyyy");*/
+
         System.out.println("Please enter a count of all lines.");
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         try {
@@ -24,6 +21,7 @@ public class Solution {
             System.out.println("Please enter the number");
         }
         if (count > 0 && count <= 100000) {
+            System.out.println("Please enter "+count+" lines.");
             lines = new String[count];
             for (int i = 0; i < count; i++) {
                 lines[i] = reader.readLine();
@@ -47,63 +45,19 @@ public class Solution {
             }
             else queryLines.add((QueryLine) currentLine);
         }
-           /* if (line.startsWith("D")) {
-                QueryLine lineD = new QueryLine();
-                lineD.setLineNum(Arrays.asList(lines).indexOf(line));
-                String[] parametrs = line.trim().split(" ");
-                if(parametrs[1].equals("*")){
-                    lineD.setServiceId(0.0);
-                }
-                else
-                lineD.setServiceId(Double.parseDouble(parametrs[1]));
-                if(parametrs[2].equals("*")){
-                    lineD.setQuestionId(0.0);
-                }
-                else
-                lineD.setQuestionId(Double.parseDouble(parametrs[2]));
-                lineD.setResponseType(parametrs[3]);
-                if (parametrs[4].contains("-")) {
-                    String[] dates = parametrs[4].split("-");
-                    Date dateFrom = format.parse(dates[0]);
-                    lineD.setDateFrom(dateFrom);
-                    Date dateTo = format.parse(dates[1]);
-                    lineD.setDateTo(dateTo);
-                } else if (!parametrs[4].contains("-")) {
-                    Date dateFrom = format.parse(parametrs[4]);
-                    lineD.setDateFrom(dateFrom);
-                }
 
-                queryLines.add(lineD);
-
-            }
-            else if(line.startsWith("C")){
-                TimeLine lineC = new TimeLine();
-                lineC.setLineNum(Arrays.asList(lines).indexOf(line));
-                String[] cParams = line.trim().split(" ");
-                lineC.setServiceId(Double.parseDouble(cParams[1]));
-                String[] question = cParams[2].split("\\.");
-                lineC.setQuestionId(Double.parseDouble(question[0]));
-                lineC.setResponseType(cParams[3]);
-                Date date = format.parse(cParams[4]);
-                lineC.setDate(date);
-                lineC.setWaitingTime(Integer.parseInt(cParams[5]));
-                timeLines.add(lineC);
-
-            }
-
-        }*/
-        System.out.println(timeLines.size());
-        System.out.println(queryLines.size());
 
         averageWaitingTime(queryLines,timeLines);
 
     }
 
-    public static void averageWaitingTime(List<QueryLine> linesD,List<TimeLine> linesC){
+    public static void averageWaitingTime(List<? extends Line> linesD,List<? extends Line> linesC){
         int linesCount=0;
         int result = 0;
-        for(QueryLine lineD : linesD) {
-            for(TimeLine lineC : linesC) {
+        for(Line line : linesD) {
+            QueryLine lineD=(QueryLine) line;
+            for(Line line1 : linesC) {
+                TimeLine lineC=(TimeLine) line1;
                 if(lineD.getQuestionId() == 0)
                 {
                     if (isServiceEq(lineC,lineD) &&
@@ -133,19 +87,19 @@ public class Solution {
         }
     }
 
-    public static boolean isPrevious(TimeLine C,QueryLine D){
+    public static boolean isPrevious(Line C,Line D){
         return C.getLineNum() < D.getLineNum();
     }
 
-    public static boolean isQuestionEq(TimeLine C,QueryLine D){
-        return (D.getQuestionId()==0||(D.getQuestionId()==C.getQuestionId()));
+    public static boolean isQuestionEq(Line C,Line D){
+        return D.getQuestionId()==C.getQuestionId();
     }
 
-    public static boolean isServiceEq(TimeLine C,QueryLine D){
+    public static boolean isServiceEq(Line C,Line D){
         return D.getServiceId()<=C.getServiceId();
     }
 
-    public static boolean isResponseEq(TimeLine C,QueryLine D){
+    public static boolean isResponseEq(Line C,Line D){
         return D.getResponseType().equals(C.getResponseType());
     }
 

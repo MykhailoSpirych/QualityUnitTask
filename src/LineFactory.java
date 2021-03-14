@@ -1,6 +1,5 @@
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 
 public class LineFactory {
@@ -10,7 +9,6 @@ public class LineFactory {
         format.applyPattern("dd.MM.yyyy");
         if (line.startsWith("D")) {
             newLine = new QueryLine();
-           // lineD.setLineNum(Arrays.asList(lines).indexOf(line));
             String[] parametrs = line.trim().split(" ");
             if(parametrs[1].equals("*")){
                 newLine.setServiceId(0.0);
@@ -34,12 +32,10 @@ public class LineFactory {
                 ((QueryLine) newLine).setDateFrom(dateFrom);
             }
 
-            //queryLines.add(lineD);
 
         }
         else if(line.startsWith("C")){
             newLine = new TimeLine();
-            //lineC.setLineNum(Arrays.asList(lines).indexOf(line));
             String[] cParams = line.trim().split(" ");
             newLine.setServiceId(Double.parseDouble(cParams[1]));
             String[] question = cParams[2].split("\\.");
@@ -48,7 +44,7 @@ public class LineFactory {
             Date date = format.parse(cParams[4]);
             ((TimeLine) newLine).setDate(date);
             ((TimeLine) newLine).setWaitingTime(Integer.parseInt(cParams[5]));
-            //timeLines.add(lineC);
+
 
         }
 return newLine;
