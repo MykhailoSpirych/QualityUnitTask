@@ -103,7 +103,9 @@ public class Solution {
         return D.getResponseType().equals(C.getResponseType());
     }
 
-    public static boolean isCorrectDate(TimeLine C,QueryLine D){
+    public static boolean isCorrectDate(Object objC, Object objD){
+        QueryLine D = (QueryLine) objD;
+        TimeLine C = (TimeLine) objC;
         return ((D.getDateTo().after(C.getDate())&&D.getDateFrom().before(C.getDate()))
                 ||D.getDateFrom().equals(C.getDate()));
     }
