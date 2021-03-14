@@ -2,6 +2,15 @@ public class Line {
 private double questionId;
 private double serviceId;
 private String responseType;
+private int lineCount;
+
+    public int getLineCount() {
+        return lineCount;
+    }
+
+    public void setLineCount(int lineCount) {
+        this.lineCount = lineCount;
+    }
 
     public double getQuestionId() {
         return questionId;
