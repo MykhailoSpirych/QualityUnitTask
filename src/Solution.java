@@ -13,9 +13,9 @@ public class Solution {
     private static String[] lines;
 
 
-    public static void main(String[] args) throws IOException, ParseException {
-        SimpleDateFormat format = new SimpleDateFormat();
-        format.applyPattern("dd.MM.yyyy");
+    public static void main(String[] args) throws IOException{
+       /* SimpleDateFormat format = new SimpleDateFormat();
+        format.applyPattern("dd.MM.yyyy");*/
         System.out.println("Please enter a count of all lines.");
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         try {
@@ -31,8 +31,21 @@ public class Solution {
         } else System.out.println("The number can`t be negative or more than 100000.Please try again.");
         List<TimeLine> timeLines = new ArrayList<>();
         List<QueryLine> queryLines = new ArrayList<>();
+        LineFactory factory = new LineFactory();
         for (String line : lines) {
-            if (line.startsWith("D")) {
+            Line currentLine = null;
+            try {
+                currentLine = factory.createLine(line);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            currentLine.setLineNum(Arrays.asList(lines).indexOf(line));
+            if(currentLine instanceof TimeLine){
+                timeLines.add((TimeLine) currentLine);
+            }
+            else queryLines.add((QueryLine) currentLine);
+        }
+           /* if (line.startsWith("D")) {
                 QueryLine lineD = new QueryLine();
                 lineD.setLineNum(Arrays.asList(lines).indexOf(line));
                 String[] parametrs = line.trim().split(" ");
@@ -76,7 +89,7 @@ public class Solution {
 
             }
 
-        }
+        }*/
         System.out.println(timeLines.size());
         System.out.println(queryLines.size());
     }
