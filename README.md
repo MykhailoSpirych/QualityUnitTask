@@ -1,4 +1,4 @@
-# QulityUnitTask
+# QualityUnitTask
 
 # This solution is for console input.
 
