@@ -94,5 +94,63 @@ public class Solution {
         }*/
         System.out.println(timeLines.size());
         System.out.println(queryLines.size());
+
+        averageWaitingTime(queryLines,timeLines);
+
+    }
+
+    public static void averageWaitingTime(List<QueryLine> linesD,List<TimeLine> linesC){
+        int linesCount=0;
+        int result = 0;
+        for(QueryLine lineD : linesD) {
+            for(TimeLine lineC : linesC) {
+                if(lineD.getQuestionId() == 0)
+                {
+                    if (isServiceEq(lineC,lineD) &&
+                            isResponseEq(lineC,lineD) &&
+                            isCorrectDate(lineC,lineD)&&
+                    isPrevious(lineC,lineD)) {
+                        linesCount++;
+                        result += lineC.getWaitingTime();
+                    }
+                }
+                else if (isServiceEq(lineC,lineD) &&
+                        isQuestionEq(lineC,lineD) &&
+                        lineD.getResponseType().equals(lineC.getResponseType())&&
+                        isCorrectDate(lineC,lineD)&&
+                isPrevious(lineC,lineD)) {
+                    linesCount++;
+                    result += lineC.getWaitingTime();
+                }
+
+            }
+            if(linesCount == 0)
+                System.out.println("-");
+            else
+                System.out.println(result/linesCount);
+            linesCount = 0;
+            result = 0;
+        }
+    }
+
+    public static boolean isPrevious(TimeLine C,QueryLine D){
+        return C.getLineNum() < D.getLineNum();
+    }
+
+    public static boolean isQuestionEq(TimeLine C,QueryLine D){
+        return (D.getQuestionId()==0||(D.getQuestionId()==C.getQuestionId()));
+    }
+
+    public static boolean isServiceEq(TimeLine C,QueryLine D){
+        return D.getServiceId()<=C.getServiceId();
+    }
+
+    public static boolean isResponseEq(TimeLine C,QueryLine D){
+        return D.getResponseType().equals(C.getResponseType());
+    }
+
+    public static boolean isCorrectDate(TimeLine C,QueryLine D){
+        return ((D.getDateTo().after(C.getDate())&&D.getDateFrom().before(C.getDate()))
+                ||D.getDateFrom().equals(C.getDate()));
     }
 }
