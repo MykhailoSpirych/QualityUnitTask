@@ -39,7 +39,9 @@ public class Solution {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            currentLine.setLineNum(Arrays.asList(lines).indexOf(line));
+            if (currentLine != null) {
+                currentLine.setLineNum(Arrays.asList(lines).indexOf(line));
+            }
             if(currentLine instanceof TimeLine){
                 timeLines.add((TimeLine) currentLine);
             }
